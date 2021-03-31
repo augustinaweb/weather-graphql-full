@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.config.ts",
     "start": "webpack serve --config webpack.dev.config.ts"
   },

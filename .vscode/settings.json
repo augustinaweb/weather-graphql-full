@@ -1,0 +1,14 @@
+{
+    "workbench.colorTheme": "Default Light+",
+    "editor.renderWhitespace": "trailing",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "eslint.validate": [
+        "javascript"
+      ],
+      "diffEditor.ignoreTrimWhitespace": false,
+      "workbench.startupEditor": "welcomePage",
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false
+}

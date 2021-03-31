@@ -1,23 +1,21 @@
 // https://www.carlrippon.com/creating-react-app-with-typescript-eslint-with-webpack5/
 
 {
-    "compilerOptions": {
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "jsx": "react",
-      "noImplicitAny": true,
-      "allowJs": true,
-      "sourceMap": true,
-      "allowSyntheticDefaultImports": true,
-      "skipLibCheck": true,
-    //    enables compatibility with Babel
-      "esModuleInterop": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true
-    },
-    "include": ["src"]
-    // "types":dir
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "noImplicitAny": false
+  },
+  "include": ["src"]
+   // "types":dir
 }
