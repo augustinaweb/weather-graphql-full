@@ -23,7 +23,8 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "indent": ["error", "tab"],
-    "no-multi-spaces": ["error"]
+    "no-multi-spaces": ["error"],
+    "allowIndentationTabs": true
   },
   "settings": {
     "react": {

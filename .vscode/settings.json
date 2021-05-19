@@ -10,6 +10,6 @@
       "diffEditor.ignoreTrimWhitespace": false,
       "workbench.startupEditor": "welcomePage",
 	"editor.insertSpaces": false,
-	"editor.minimap.enabled": false,
-	"editor.comments.insertSpace": false
+	"editor.detectIndentation": false,
+	"editor.minimap.enabled": false
 }
