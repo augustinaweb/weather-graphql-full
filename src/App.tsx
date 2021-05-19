@@ -1,8 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import './app.css';
 import { DailyWrapper } from './DailyWrapper';
+import { gql, useQuery } from '@apollo/client';
 
-export function App() {
+const query = gql;
+//DOES NOT RECGNIZE THE QUERRY!
+//query {
+//	getCityByName(name: "Vilnius") {
+//		weather {
+//		  summary {
+//			description
+//			title
+//			icon
+//		  }
+//		  temperature{
+//			actual
+//		  }
+//		  wind{
+//			speed
+//		  }
+//		}
+//	  }
+//}
+
+export const App: React.FC = () => {
 	const [city, setCity] = useState('Vilnius');
 	// const [cityData, setCityData] = useState({lon: 25.2798, lat: 54.689});
 	const [weatherData, setWeatherData] = useState([]);
@@ -10,21 +31,27 @@ export function App() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`)
-			.then(res => res.json())
-		// .then(res=> return {setCityData({
-		//     lon: res.coord.lon,
-		//     lat: res.coord.lat
-		// });
-		//    return res; })
-			.then(res => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`))
-			.then(res => res.json())
-			.then(res => {
+		fetch(
+			`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`
+		)
+			.then((res) => res.json())
+			// .then(res=> return {setCityData({
+			//     lon: res.coord.lon,
+			//     lat: res.coord.lat
+			// });
+			//    return res; })
+			.then((res) =>
+				fetch(
+					`https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`
+				)
+			)
+			.then((res) => res.json())
+			.then((res) => {
 				setWeatherData(res.daily);
 				setIsLoaded(true);
 				console.log(res);
 			})
-			.catch(error => {
+			.catch((error) => {
 				setIsLoaded(true);
 				setError(error);
 			});
@@ -67,18 +94,23 @@ export function App() {
 	} else if (!isLoaded) {
 		return <div>Loading...</div>;
 	} else {
-		return(
+		return (
 			<>
 				<div className="app">
 					<h1>Another lovely day in </h1>
-					<input onBlur={(e) => setCity(e.target.value)} 
-						onKeyDown={(e) => {if(e.key === 'Enter') {setCity((e.target as HTMLInputElement).value);}}} 
-						placeholder={city} 
-						className="city-name">
-					</input>
-					<DailyWrapper daily={weatherData}/>
+					<input
+						onBlur={(e) => setCity(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter') {
+								setCity((e.target as HTMLInputElement).value);
+							}
+						}}
+						placeholder={city}
+						className="city-name"
+					></input>
+					<DailyWrapper daily={weatherData} />
 				</div>
 			</>
 		);
 	}
-}
+};
