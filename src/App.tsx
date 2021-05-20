@@ -1,36 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import './app.css';
-import { DailyWrapper } from './DailyWrapper';
+import React, { useEffect, useState } from "react";
+import "./app.css";
+import { DailyWrapper } from "./DailyWrapper";
+import { gql, useQuery } from "@apollo/client";
 
-export function App() {
-	const [city, setCity] = useState('Vilnius');
-	// const [cityData, setCityData] = useState({lon: 25.2798, lat: 54.689});
-	const [weatherData, setWeatherData] = useState([]);
-	const [isLoaded, setIsLoaded] = useState(false);
-	const [error, setError] = useState(null);
+const query = gql;
+//DOES NOT RECGNIZE THE QUERRY!
+//query {
+//	getCityByName(name: "Vilnius") {
+//		weather {
+//		  summary {
+//			description
+//			title
+//			icon
+//		  }
+//		  temperature{
+//			actual
+//		  }
+//		  wind{
+//			speed
+//		  }
+//		}
+//	  }
+//}
 
-	useEffect(() => {
-		fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`)
-			.then(res => res.json())
-		// .then(res=> return {setCityData({
-		//     lon: res.coord.lon,
-		//     lat: res.coord.lat
-		// });
-		//    return res; })
-			.then(res => fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`))
-			.then(res => res.json())
-			.then(res => {
-				setWeatherData(res.daily);
-				setIsLoaded(true);
-				console.log(res);
-			})
-			.catch(error => {
-				setIsLoaded(true);
-				setError(error);
-			});
-	}, [city]);
+export const App: React.FC = () => {
+  const [city, setCity] = useState("Vilnius");
+  // const [cityData, setCityData] = useState({lon: 25.2798, lat: 54.689});
+  const [weatherData, setWeatherData] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
-	/*     useEffect(() => {
+  useEffect(() => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`
+    )
+      .then((res) => res.json())
+      // .then(res=> return {setCityData({
+      //     lon: res.coord.lon,
+      //     lat: res.coord.lat
+      // });
+      //    return res; })
+      .then((res) =>
+        fetch(
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`
+        )
+      )
+      .then((res) => res.json())
+      .then((res) => {
+        setWeatherData(res.daily);
+        setIsLoaded(true);
+        console.log(res);
+      })
+      .catch((error) => {
+        setIsLoaded(true);
+        setError(error);
+      });
+  }, [city]);
+
+  /*     useEffect(() => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`)
             .then(res => res.json())
             .then(res=> {
@@ -45,7 +72,6 @@ export function App() {
                 setError(error);
             })
     }, [city]);
-
     useEffect(() => {
         //API key: 4868c3b126a7a3cac48a93a3b1d80382
         // {lon: 25.2798, lat: 54.6892}
@@ -62,23 +88,28 @@ export function App() {
             })
     }, [cityData]); */
 
-	if (error) {
-		return <div>Error: </div>;
-	} else if (!isLoaded) {
-		return <div>Loading...</div>;
-	} else {
-		return(
-			<>
-				<div className="app">
-					<h1>Another lovely day in </h1>
-					<input onBlur={(e) => setCity(e.target.value)} 
-						onKeyDown={(e) => {if(e.key === 'Enter') {setCity((e.target as HTMLInputElement).value);}}} 
-						placeholder={city} 
-						className="city-name">
-					</input>
-					<DailyWrapper daily={weatherData}/>
-				</div>
-			</>
-		);
-	}
-}
+  if (error) {
+    return <div>Error: </div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <>
+        <div className="app">
+          <h1>Another lovely day in </h1>
+          <input
+            onBlur={(e) => setCity(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setCity((e.target as HTMLInputElement).value);
+              }
+            }}
+            placeholder={city}
+            className="city-name"
+          ></input>
+          <DailyWrapper daily={weatherData} />
+        </div>
+      </>
+    );
+  }
+};
