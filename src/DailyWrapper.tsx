@@ -1,14 +1,13 @@
-import React from 'react';
-import { DailyIcon } from './DailyIcon';
-import './app.css';
+import React from "react";
+import { DailyIcon } from "./DailyIcon";
+import "./app.css";
+import { CityByName_getCityByName_weather } from "./queries/types/CityByName";
 
-interface IProps {
-   daily: any;
-}
-
-const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-export const DailyWrapper: React.FC<IProps> = ({daily}) => {
+export const DailyWrapper: React.FC<CityByName_getCityByName_weather> = ({
+	summary,
+	temperature,
+	wind
+}) => {
 	const current = new Date();
 	const currentWeekday = current.getDay();
 	const days = daily.slice(0, 8);
@@ -20,9 +19,42 @@ export const DailyWrapper: React.FC<IProps> = ({daily}) => {
 				const index = currentWeekday + i + 1;
 				const tomorrow = new Date();
 				tomorrow.setDate(today.getDate() + 1 + i);
-				const weekDay = index <= 6 ? weekDays[index] : weekDays[index - 7];
-				return <DailyIcon key={`${weekDay}${i}`} item={item} weekDay={weekDay} date={tomorrow}/>;
+				const weekDay =
+					index <= 6 ? weekDays[index] : weekDays[index - 7];
+				return (
+					<DailyIcon
+						key={`${weekDay}${i}`}
+						item={item}
+						weekDay={weekDay}
+						date={tomorrow}
+					/>
+				);
 			})}
 		</div>
 	);
 };
+
+//interface IProps {
+//	daily: any;
+// }
+
+// const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+// export const DailyWrapper: React.FC<IProps> = ({daily}) => {
+//	 const current = new Date();
+//	 const currentWeekday = current.getDay();
+//	 const days = daily.slice(0, 8);
+//	 const today = new Date();
+
+//	 return (
+//		 <div className="daily-wrapper">
+//			 {days.map((item, i: number) => {
+//				 const index = currentWeekday + i + 1;
+//				 const tomorrow = new Date();
+//				 tomorrow.setDate(today.getDate() + 1 + i);
+//				 const weekDay = index <= 6 ? weekDays[index] : weekDays[index - 7];
+//				 return <DailyIcon key={`${weekDay}${i}`} item={item} weekDay={weekDay} date={tomorrow}/>;
+//			 })}
+//		 </div>
+//	 );
+// };

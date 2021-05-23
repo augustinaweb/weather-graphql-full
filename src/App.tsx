@@ -1,115 +1,66 @@
 import React, { useEffect, useState } from "react";
 import "./app.css";
 import { DailyWrapper } from "./DailyWrapper";
-import { gql, useQuery } from "@apollo/client";
-
-const query = gql;
-//DOES NOT RECGNIZE THE QUERRY!
-//query {
-//	getCityByName(name: "Vilnius") {
-//		weather {
-//		  summary {
-//			description
-//			title
-//			icon
-//		  }
-//		  temperature{
-//			actual
-//		  }
-//		  wind{
-//			speed
-//		  }
-//		}
-//	  }
-//}
+import { DailyIcon } from "./DailyIcon";
+import { getWeatherForCity, queryWithVariable } from "./queries/getCityByName";
+import { ApolloError, useQuery } from "@apollo/client";
+import { CityByName } from "./queries/types/CityByName";
 
 export const App: React.FC = () => {
-  const [city, setCity] = useState("Vilnius");
-  // const [cityData, setCityData] = useState({lon: 25.2798, lat: 54.689});
-  const [weatherData, setWeatherData] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
+	const [city, setCity] = useState("Vilnius");
+	const [errors, setErrors] = useState<ApolloError | undefined>(undefined);
+	const [isLoading, setIsLoading] = useState(true);
+	const [weatherData, setWeatherData] =
+		useState<CityByName | undefined>(undefined);
+	const { data, loading, error, refetch } = useQuery<CityByName>(
+		getWeatherForCity(city)
+	);
 
-  useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`
-    )
-      .then((res) => res.json())
-      // .then(res=> return {setCityData({
-      //     lon: res.coord.lon,
-      //     lat: res.coord.lat
-      // });
-      //    return res; })
-      .then((res) =>
-        fetch(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${res.coord.lat}&lon=${res.coord.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`
-        )
-      )
-      .then((res) => res.json())
-      .then((res) => {
-        setWeatherData(res.daily);
-        setIsLoaded(true);
-        console.log(res);
-      })
-      .catch((error) => {
-        setIsLoaded(true);
-        setError(error);
-      });
-  }, [city]);
+	//const { data, loading, error, refetch } = useQuery<CityByName>(
+	//	queryWithVariable,
+	//	{
+	//		variables: { ["city"]: city }
+	//	}
+	//);
+	console.log({ data, loading, error });
 
-  /*     useEffect(() => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4868c3b126a7a3cac48a93a3b1d80382`)
-            .then(res => res.json())
-            .then(res=> {
-                setCityData({
-                    lon: res.coord.lon,
-                    lat: res.coord.lat
-                });
-                console.log(res);
-            })
-            .catch(error => {
-                setIsLoaded(true);
-                setError(error);
-            })
-    }, [city]);
-    useEffect(() => {
-        //API key: 4868c3b126a7a3cac48a93a3b1d80382
-        // {lon: 25.2798, lat: 54.6892}
-        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=metric&appid=4868c3b126a7a3cac48a93a3b1d80382`)
-            .then(res => res.json())
-            .then(res => {
-                setWeatherData(res);
-                setIsLoaded(true);
-                console.log(res);
-            })
-            .catch(error => {
-                setIsLoaded(true);
-                setError(error);
-            })
-    }, [cityData]); */
+	useEffect(() => {
+		setErrors(error);
+		setIsLoading(!loading);
+		setWeatherData(data);
+	}, [city]);
 
-  if (error) {
-    return <div>Error: </div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <>
-        <div className="app">
-          <h1>Another lovely day in </h1>
-          <input
-            onBlur={(e) => setCity(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                setCity((e.target as HTMLInputElement).value);
-              }
-            }}
-            placeholder={city}
-            className="city-name"
-          ></input>
-          <DailyWrapper daily={weatherData} />
-        </div>
-      </>
-    );
-  }
+	//  https://www.apollographql.com/blog/tooling/apollo-codegen/typescript-graphql-code-generator-generate-graphql-types/
+
+	if (errors) {
+		return <div>Error: </div>;
+	} else if (isLoading) {
+		return <div>Loading...</div>;
+	} else {
+		return (
+			<>
+				<div className="app">
+					{console.log({ errors, isLoading, data })}
+					<h1>Another lovely day in </h1>
+					<input
+						onBlur={(e) => setCity(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								setCity((e.target as HTMLInputElement).value);
+								refetch();
+							}
+						}}
+						placeholder={city}
+						className="city-name"
+					></input>
+					<DailyIcon
+						summary={data?.getCityByName?.weather?.summary}
+						temperature={data?.getCityByName?.weather?.temperature}
+						wind={data?.getCityByName?.weather?.wind}
+					/>
+					{/*<DailyWrapper daily={weatherData} />*/}
+				</div>
+			</>
+		);
+	}
 };
