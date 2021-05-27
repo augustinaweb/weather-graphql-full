@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const getWeatherForCity = (city: string) => {
-	const query = gql`
+export const getWeatherForCity = async (city: string) => {
+	const query = await gql`
 		query CityByName {
 			getCityByName(name: "${city}") {
 				weather {

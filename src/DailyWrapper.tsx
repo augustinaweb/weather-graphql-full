@@ -1,9 +1,9 @@
 import React from "react";
 import { DailyIcon } from "./DailyIcon";
 import "./app.css";
-import { CityByName_getCityByName_weather } from "./queries/types/CityByName";
+import { CityByName_getCityByName_weather as weather } from "./queries/types/CityByName";
 
-export const DailyWrapper: React.FC<CityByName_getCityByName_weather> = ({
+export const DailyWrapper: React.FC<weather> = ({
 	summary,
 	temperature,
 	wind

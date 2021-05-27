@@ -13,15 +13,15 @@ import sunsetIcon from "./icons/sunset.png";
 import windIcon from "./icons/wind.png";
 import humidityIcon from "./icons/humidity.png";
 import {
-	CityByName_getCityByName_weather_summary,
-	CityByName_getCityByName_weather_temperature,
-	CityByName_getCityByName_weather_wind
+	CityByName_getCityByName_weather_summary as summary,
+	CityByName_getCityByName_weather_temperature as temperature,
+	CityByName_getCityByName_weather_wind as wind
 } from "./queries/types/CityByName";
 
 export const DailyIcon = (
-	summary: CityByName_getCityByName_weather_summary,
-	temperature: CityByName_getCityByName_weather_temperature,
-	wind: CityByName_getCityByName_weather_wind
+	summary: summary,
+	temperature: temperature,
+	wind: wind
 ) => {
 	const icons = {
 		"01": sunny,
@@ -77,34 +77,6 @@ export const DailyIcon = (
 		</div>
 	);
 };
-
-//interface IProps {
-//   item: StateProps;
-//   weekDay: string;
-//   date: Date;
-// }
-
-//interface StateProps {
-//    temp: TempProps;
-//    weather: WeatherProps;
-//    wind_speed: number;
-//    humidity: number;
-//    sunrise: number;
-//    sunset: number;
-//}
-
-//interface WeatherProps {
-//    0:WeatherProps2;
-//}
-
-//interface WeatherProps2 {
-//    description: string;
-//    icon: string;
-//}
-//interface TempProps {
-//    day: number;
-//    night: number;
-//}
 
 //export const DailyIcon: React.FC<IProps> = ({ item: {temp: {day, night}, weather: {0: {description, icon}}, wind_speed, humidity, sunrise, sunset}, weekDay, date }) => {
 //	const icons = {

@@ -58,6 +58,7 @@ export const App: React.FC = () => {
 						temperature={data?.getCityByName?.weather?.temperature}
 						wind={data?.getCityByName?.weather?.wind}
 					/>
+
 					{/*<DailyWrapper daily={weatherData} />*/}
 				</div>
 			</>
