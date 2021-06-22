@@ -1,34 +1,12 @@
 import React, { useState } from 'react';
 import './app.css';
-<<<<<<< HEAD
-import { DailyWrapper } from './DailyIcon';
+import { DailyWrapper } from './DailyWrapper';
 import { queryWithVariable } from './queries/getCityByName';
 import { useQuery } from '@apollo/client';
 //import { CityByName, CityByNameVariables } from './queries/types/CityByName';
 
 export const App: React.FC = () => {
 	const [city, setCity] = useState('Vilnius');
-=======
-import { DailyIcon } from './DailyIcon';
-import { queryWithVariable } from './queries/getCityByName';
-import { useQuery } from '@apollo/client';
-import { CityByName, CityByNameVariables } from './queries/types/CityByName';
-
-export const App: React.FC = () => {
-	const [city, setCity] = useState('Vilnius');
-
-	const { data, loading, error, refetch } = useQuery<
-		CityByName,
-		CityByNameVariables
-	>(queryWithVariable, {
-		variables: { ['name']: city }
-		//variables: { ['name']: city, ['config']: { ['units']: 'metric' } }
-
-		//to getCityByName.ts
-		//query CityByName($name: String!, $config: Charachter) {
-		//	getCityByName(name: $name, config: $config) {
-	});
->>>>>>> ede293e1bc06dde63a633e32cd4eb23fa0d8ffcb
 
 	const { data, loading, error, refetch } = useQuery<any>(
 		//<		CityByName,

@@ -8,7 +8,6 @@ import drizzle from './icons/10.png';
 import stormy from './icons/11.png';
 import snowy from './icons/13.png';
 import misty from './icons/50.png';
-<<<<<<< HEAD
 import sunriseIcon from './icons/sunrise.png';
 import sunsetIcon from './icons/sunset.png';
 import windIcon from './icons/wind.png';
@@ -18,14 +17,6 @@ import humidityIcon from './icons/humidity.png';
 //	CityByName_getCityByName_weather_temperature as Temperature,
 //	CityByName_getCityByName_weather_wind as Wind
 //} from './queries/types/CityByName';
-=======
-import windIcon from './icons/wind.png';
-import {
-	CityByName_getCityByName_weather_summary as Summary,
-	CityByName_getCityByName_weather_temperature as Temperature,
-	CityByName_getCityByName_weather_wind as Wind
-} from './queries/types/CityByName';
->>>>>>> ede293e1bc06dde63a633e32cd4eb23fa0d8ffcb
 
 interface Props {
 	summary: Summary;
@@ -33,15 +24,9 @@ interface Props {
 	temperature: Temperature;
 }
 
-<<<<<<< HEAD
 //type RequiredNotNull<T> = {
 //	[P in keyof T]: NonNullable<T[P]>;
 //};
-=======
-type RequiredNotNull<T> = {
-	[P in keyof T]: NonNullable<T[P]>;
-};
->>>>>>> ede293e1bc06dde63a633e32cd4eb23fa0d8ffcb
 
 //function checkNonNull<T extends Record<string, unknown>>(
 //	obj: T
@@ -82,10 +67,8 @@ export const DailyIcon: React.FC<Props> = ({
 		//throw new Error
 	}
 
-<<<<<<< HEAD
 	console.log({ summary, temperature, wind });
-=======
->>>>>>> ede293e1bc06dde63a633e32cd4eb23fa0d8ffcb
+
 	const index = summary?.icon ? summary.icon.slice(0, -1) : '01';
 	const dateCalc = new Date().toLocaleDateString();
 	const temp = temperature?.actual

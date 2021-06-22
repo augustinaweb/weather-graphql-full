@@ -10,11 +10,7 @@ import {
 
 const client = new ApolloClient({
 	link: new HttpLink({
-<<<<<<< HEAD
 		uri: 'https://open-weather-map-graphql.herokuapp.com/'
-=======
-		uri: 'https://graphql-weather-api.herokuapp.com/'
->>>>>>> ede293e1bc06dde63a633e32cd4eb23fa0d8ffcb
 	}),
 	cache: new InMemoryCache()
 });
