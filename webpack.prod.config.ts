@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const config: webpack.Configuration = {
 	mode: 'production',
@@ -11,7 +11,7 @@ const config: webpack.Configuration = {
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: '[name].[contenthash].js',
-		publicPath: '',
+		publicPath: ''
 	},
 	module: {
 		rules: [
@@ -24,10 +24,10 @@ const config: webpack.Configuration = {
 						presets: [
 							'@babel/preset-env',
 							'@babel/preset-react',
-							'@babel/preset-typescript',
-						],
-					},
-				},
+							'@babel/preset-typescript'
+						]
+					}
+				}
 			},
 			{
 				test: /\.css$/,
@@ -37,23 +37,23 @@ const config: webpack.Configuration = {
 				test: /\.(png|jpg|gif)$/,
 				use: ['file-loader']
 			}
-		],
+		]
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js'],
+		extensions: ['.tsx', '.ts', '.js']
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: 'src/index.html',
+			template: 'src/index.html'
 		}),
 		new ForkTsCheckerWebpackPlugin({
-			async: false,
+			async: false
 		}),
 		new ESLintPlugin({
-			extensions: ['js', 'jsx', 'ts', 'tsx'],
+			extensions: ['js', 'jsx', 'ts', 'tsx']
 		}),
-		new CleanWebpackPlugin(),
-	],
+		new CleanWebpackPlugin()
+	]
 };
 
 export default config;
