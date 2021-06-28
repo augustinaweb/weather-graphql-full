@@ -3,37 +3,38 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { Unit } from "./../../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: CityByName
 // ====================================================
 
-export interface CityByName_getCityByName_weather_summary {
-  readonly __typename: "Summary";
-  readonly description: string | null;
-  readonly title: string | null;
-  readonly icon: string | null;
-}
-
-export interface CityByName_getCityByName_weather_temperature {
+export interface CityByName_getCityByName_daily_temp {
   readonly __typename: "Temperature";
-  readonly actual: number | null;
+  readonly day: number;
+  readonly night: number;
 }
 
-export interface CityByName_getCityByName_weather_wind {
-  readonly __typename: "Wind";
-  readonly speed: number | null;
-}
-
-export interface CityByName_getCityByName_weather {
+export interface CityByName_getCityByName_daily_weather {
   readonly __typename: "Weather";
-  readonly summary: CityByName_getCityByName_weather_summary | null;
-  readonly temperature: CityByName_getCityByName_weather_temperature | null;
-  readonly wind: CityByName_getCityByName_weather_wind | null;
+  readonly description: string;
+  readonly icon: string;
+}
+
+export interface CityByName_getCityByName_daily {
+  readonly __typename: "Daily";
+  readonly dt: number;
+  readonly sunrise: number;
+  readonly sunset: number;
+  readonly temp: CityByName_getCityByName_daily_temp;
+  readonly humidity: number;
+  readonly wind_speed: number;
+  readonly weather: ReadonlyArray<CityByName_getCityByName_daily_weather>;
 }
 
 export interface CityByName_getCityByName {
   readonly __typename: "City";
-  readonly weather: CityByName_getCityByName_weather | null;
+  readonly daily: ReadonlyArray<CityByName_getCityByName_daily>;
 }
 
 export interface CityByName {
@@ -42,4 +43,5 @@ export interface CityByName {
 
 export interface CityByNameVariables {
   readonly name: string;
+  readonly units?: Unit | null;
 }

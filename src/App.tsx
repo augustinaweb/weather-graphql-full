@@ -3,22 +3,21 @@ import './app.css';
 import { DailyWrapper } from './DailyWrapper';
 import { queryWithVariable } from './queries/getCityByName';
 import { useQuery } from '@apollo/client';
-//import { CityByName, CityByNameVariables } from './queries/types/CityByName';
+import { CityByName, CityByNameVariables } from './queries/types/CityByName';
+import { Unit } from '../types/globalTypes';
 
 export const App: React.FC = () => {
 	const [city, setCity] = useState('Vilnius');
 
-	const { data, loading, error, refetch } = useQuery<any>(
-		//<		CityByName,
-		//	CityByNameVariables>
-		queryWithVariable,
-		{
-			variables: { ['name']: city }
-		}
-	);
+	const { data, loading, error, refetch } = useQuery<
+		CityByName,
+		CityByNameVariables
+	>(queryWithVariable, {
+		variables: { ['name']: city }
+	});
 
 	if (error) {
-		return <div>Error: </div>;
+		return <div>{`Error: ${error}`}</div>;
 	} else if (loading) {
 		return <div>Loading...</div>;
 	} else {
@@ -38,11 +37,7 @@ export const App: React.FC = () => {
 						placeholder={city}
 						className="city-name"
 					></input>
-					<DailyWrapper
-						summary={data?.getCityByName?.weather?.summary}
-						temperature={data?.getCityByName?.weather?.temperature}
-						wind={data?.getCityByName?.weather?.wind}
-					/>
+					<DailyWrapper daily={data?.getCityByName?.daily} />
 				</div>
 			</>
 		);

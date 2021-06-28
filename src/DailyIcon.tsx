@@ -12,44 +12,15 @@ import sunriseIcon from './icons/sunrise.png';
 import sunsetIcon from './icons/sunset.png';
 import windIcon from './icons/wind.png';
 import humidityIcon from './icons/humidity.png';
-//import {
-//	CityByName_getCityByName_weather_summary as Summary,
-//	CityByName_getCityByName_weather_temperature as Temperature,
-//	CityByName_getCityByName_weather_wind as Wind
-//} from './queries/types/CityByName';
+import { CityByName_getCityByName_daily as daily } from './queries/types/CityByName';
 
 interface Props {
-	summary: Summary;
-	wind: Wind;
-	temperature: Temperature;
+	item: daily;
+	weekDay: string;
+	date: Date;
 }
 
-//type RequiredNotNull<T> = {
-//	[P in keyof T]: NonNullable<T[P]>;
-//};
-
-//function checkNonNull<T extends Record<string, unknown>>(
-//	obj: T
-//): RequiredNotNull<T> | null {
-//	if (
-//		Object.values(obj).find(
-//			(value) => value === null || value === undefined
-//		)
-//	)
-//		return null;
-//	return obj as RequiredNotNull<T>;
-//}
-
-const checkNonNull = <T extends any>(obj: T): obj is RequiredNotNull<T> =>
-	!Object.values(obj as Record<string, unknown>).find(
-		(value) => value === null || value === undefined
-	);
-
-export const DailyIcon: React.FC<Props> = ({
-	summary,
-	temperature,
-	wind
-}: Props) => {
+export const DailyIcon: React.FC<Props> = ({ item, weekDay, date }: Props) => {
 	const icons = {
 		'01': sunny,
 		'02': sclouds,
@@ -62,37 +33,50 @@ export const DailyIcon: React.FC<Props> = ({
 		'50': misty
 	};
 
-	if (!checkNonNull(summary)) {
-		return null;
-		//throw new Error
-	}
-
-	console.log({ summary, temperature, wind });
-
-	const index = summary?.icon ? summary.icon.slice(0, -1) : '01';
-	const dateCalc = new Date().toLocaleDateString();
-	const temp = temperature?.actual
-		? Math.round(temperature?.actual)
-		: temperature?.actual;
-	const windSpeed = wind?.speed ? Math.round(wind.speed) : 'undefined';
-
+	const index = item.weather[0].icon.slice(0, -1);
+	const dateCalc = new Date(date).toLocaleDateString();
+	const sunriseCalc = new Date(item.sunrise * 1000).toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false
+	});
+	const sunsetCalc = new Date(item.sunset * 1000).toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false
+	});
 	return (
 		<div>
 			<div className="daily-icon">
+				<h3>{weekDay}</h3>
 				<p>{dateCalc}</p>
 				<div className="icon">
 					<img src={icons[index]} alt="weather icon" />
 				</div>
 				<div className="description">
 					<p>The skies promise</p>
-					<p>{summary?.description}</p>
+					<p>{item.weather[0].description}</p>
 				</div>
 				<div className="temperature">
-					<p>{temp} &deg;C</p>
+					<p>{Math.round(item.temp.day)} &deg;C</p>
+					<p> / </p>
+					<p>{Math.round(item.temp.night)} &deg;C</p>
 				</div>
 				<div className="data wind">
 					<img src={windIcon} alt="wind_icon"></img>
-					<p>{windSpeed} m/s</p>
+					<p>{Math.round(item.wind_speed)} m/s</p>
+				</div>
+				<div className="data humidity">
+					<img src={humidityIcon} alt="humidity_icon"></img>
+					<p>{item.humidity}</p>
+				</div>
+				<div className="data sunrise">
+					<img src={sunriseIcon} alt="sunrise_icon"></img>
+					<p>{sunriseCalc}</p>
+				</div>
+				<div className="data sunset">
+					<img src={sunsetIcon} alt="sunset_icon"></img>
+					<p>{sunsetCalc}</p>
 				</div>
 			</div>
 		</div>
